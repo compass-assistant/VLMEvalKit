@@ -123,6 +123,7 @@ from .revsi import ReVSI
 from .robospatialbench import RoboSpatialBench
 from .sarena import SArena
 from .scidocbench import SciDocBench
+from .sen2med import Sen2Med
 from .sfebench import SFE
 from .SGI_Bench_1_0.deep_research import SGI_Bench_Deep_Research
 from .SGI_Bench_1_0.dry_experiment import SGI_Bench_Dry_Experiment
@@ -351,7 +352,7 @@ VIDEO_DATASET += [SiteBenchVideo, VsiBench, VsiSuperRecall, VsiSuperCount, MMSIV
 
 TEXT_DATASET = [
     TextMCQDataset, SGI_Bench_Wet_Experiment, SGI_Bench_Dry_Experiment,
-    SGI_Bench_Deep_Research, SGI_Bench_Idea_Generation, XSTestDataset, FlamesDataset
+    SGI_Bench_Deep_Research, SGI_Bench_Idea_Generation, XSTestDataset, FlamesDataset, Sen2Med
 ]
 
 CUSTOM_DATASET = [
