@@ -114,6 +114,7 @@ from .omtgbench import OMTGBench
 from .ost_bench import OSTDataset
 from .perceptionbench import PerceptionBench
 from .plotqa import PlotQA
+from .povbench import POVBench
 from .qbench_video import QBench_Video, QBench_Video_MCQ, QBench_Video_VQA
 from .reasonmap_plus import ReasonMap_Plus
 from .refcoco import RefCOCODataset
@@ -329,7 +330,8 @@ IMAGE_DATASET = [
 # add by EASI team
 IMAGE_DATASET += [
     MindCubeBench, EmbSpatialBench, ViewSpatialBench, MMSIBench, SiteBenchImage,
-    SparBench, SpatialVizBench, SpatialDISE, StareBench, OmniSpatialBench, ERQABench, RoboSpatialBench, RefSpatialBench,  # noqa: E501
+    SparBench, SpatialVizBench, SpatialDISE, StareBench, OmniSpatialBench, ERQABench, RoboSpatialBench, RefSpatialBench,
+    POVBench,
     SPBench, ERIQBench, DA2K
 ]
 

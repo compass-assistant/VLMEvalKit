@@ -96,6 +96,7 @@ class OpenAIWrapper(BaseAPI):
                  total_img_size: int = -1,
                  max_file_size: int = 1e9,
                  img_detail: str = 'low',
+                 image_format: str = 'JPEG',
                  use_azure: bool = False,
                  stream: bool = False,
                  response_charset: str = 'utf-8',
@@ -171,8 +172,11 @@ class OpenAIWrapper(BaseAPI):
         assert total_img_size > 0 or total_img_size == -1
         self.total_img_size = total_img_size
         self.max_file_size = max_file_size
-        assert img_detail in ['high', 'low']
+        assert img_detail in ['high', 'low', None]
         self.img_detail = img_detail
+        image_format = image_format.upper()
+        assert image_format in ['JPEG', 'PNG', 'WEBP']
+        self.image_format = image_format
         self.timeout = timeout
         self.stream = stream
         self.response_charset = response_charset
@@ -240,8 +244,12 @@ class OpenAIWrapper(BaseAPI):
                         target_size = min(target_size, int(self.img_size / (image_num**0.5)))
                     target_size = -1 if math.isinf(target_size) else target_size
                     b64 = encode_image_to_base64(
-                        img, target_size=target_size, max_file_size=self.max_file_size)
-                    img_struct = dict(url=f'data:image/jpeg;base64,{b64}', detail=self.img_detail)
+                        img, target_size=target_size, fmt=self.image_format,
+                        max_file_size=self.max_file_size)
+                    mime_format = 'jpeg' if self.image_format == 'JPEG' else self.image_format.lower()
+                    img_struct = dict(url=f'data:image/{mime_format};base64,{b64}')
+                    if self.img_detail is not None:
+                        img_struct['detail'] = self.img_detail
                     content_list.append(dict(type='image_url', image_url=img_struct))
         else:
             assert all([x['type'] == 'text' for x in inputs])
