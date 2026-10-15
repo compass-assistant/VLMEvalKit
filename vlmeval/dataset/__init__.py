@@ -114,6 +114,7 @@ from .omtgbench import OMTGBench
 from .ost_bench import OSTDataset
 from .perceptionbench import PerceptionBench
 from .plotqa import PlotQA
+from .pvfh_bench import PVFHBench
 from .qbench_video import QBench_Video, QBench_Video_MCQ, QBench_Video_VQA
 from .reasonmap_plus import ReasonMap_Plus
 from .refcoco import RefCOCODataset
@@ -323,7 +324,7 @@ IMAGE_DATASET = [
     SciDocBench, OmniMat,
     MMRarebenchDiagnosis, MMRarebenchTreatment, MMRarebenchCrossmodal, MMRarebenchExamination,
     MRareBenchDiagnosis, MRareBenchEvidenceVerif, MolRecBenchWildDataset, BabyVision, WildprobeDataset,
-    PerceptionBench, SUPERChemDataset, C4Bench,
+    PerceptionBench, SUPERChemDataset, C4Bench, PVFHBench,
 ]
 
 # add by EASI team

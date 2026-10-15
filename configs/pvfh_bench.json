@@ -1,0 +1,6 @@
+{
+  "PVFH-Bench": {
+    "class": "PVFHBench",
+    "dataset": "PVFH-Bench"
+  }
+}
