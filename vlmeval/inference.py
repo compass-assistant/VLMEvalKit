@@ -45,6 +45,7 @@ def infer_data_api(model, work_dir, model_name, dataset, index_set=None, api_npr
     index_str_to_orig = {str(i): i for i in indices}
 
     structs = []
+    generation_kwargs = []
     for i in range(lt):
         item = data.iloc[i]
         if hasattr(dataset, 'force_use_dataset_prompt') and dataset.force_use_dataset_prompt:
@@ -55,6 +56,10 @@ def infer_data_api(model, work_dir, model_name, dataset, index_set=None, api_npr
         else:
             struct = dataset.build_prompt(item)
         structs.append(struct)
+        kwargs = dataset.get_generation_kwargs(item) if hasattr(dataset, 'get_generation_kwargs') else {}
+        if not isinstance(kwargs, dict):
+            raise TypeError('dataset.get_generation_kwargs() must return a dict')
+        generation_kwargs.append(kwargs)
 
     out_file = f'{work_dir}/{model_name}_{dataset_name}_checkpoint.pkl'
 
@@ -78,11 +83,13 @@ def infer_data_api(model, work_dir, model_name, dataset, index_set=None, api_npr
             res = {k: v for k, v in res.items() if FAIL_MSG not in v}
         logger.info(f'Reuse {len(res)} inference results from previous run.')
 
+    generation_kwargs = [k for i, k in zip(indices, generation_kwargs) if str(i) not in res]
     structs = [s for i, s in zip(indices, structs) if str(i) not in res]
     indices = [i for i in indices if str(i) not in res]
 
     gen_func = model.generate
-    structs = [dict(message=struct, dataset=dataset_name) for struct in structs]
+    structs = [dict(message=struct, dataset=dataset_name, **kwargs)
+               for struct, kwargs in zip(structs, generation_kwargs)]
 
     if len(structs):
         str_indices = [str(i) for i in indices]

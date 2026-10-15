@@ -1,0 +1,10 @@
+{
+  "data": {
+    "Sen2Med_baseline": {
+      "class": "Sen2Med",
+      "dataset": "Sen2Med_baseline",
+      "repetitions": 3,
+      "validate_release": true
+    }
+  }
+}
